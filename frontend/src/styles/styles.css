@@ -1,0 +1,103 @@
+/* General styles for body */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Styles for the container */
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Page title styling */
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Input field styling */
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Error message styling */
+p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+p.error-message {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+/* Styles for the dashboard */
+.dashboard {
+  text-align: center;
+  background-color: #f4f4f9;
+  padding: 2rem;
+}
+
+.dashboard h2 {
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.dashboard p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.dashboard button {
+  margin-top: 1rem;
+  background-color: #ff4d4f;
+}
+
+.dashboard button:hover {
+  background-color: #c0392b;
+}
