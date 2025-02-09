@@ -13,7 +13,7 @@ class CameraCreate(BaseModel):
     rtsp_url: str
     location: str
 
-# ✅ Get all cameras (filtered by is_deleted=False)
+# Get all cameras
 @router.get("/get-cameras/")
 def get_cameras(db: Session = Depends(get_db)):
     cameras = db.query(Camera).filter(Camera.is_deleted == False).all()
@@ -21,7 +21,7 @@ def get_cameras(db: Session = Depends(get_db)):
         return {"message": "No cameras available", "cameras": []}
     return cameras
 
-# ✅ Add new camera (prevent duplicates)
+# Add new camera
 @router.post("/cameras/")
 def create_camera(camera: CameraCreate, db: Session = Depends(get_db)):
     existing_camera = db.query(Camera).filter(Camera.rtsp_url == camera.rtsp_url).first()
@@ -42,3 +42,21 @@ def create_camera(camera: CameraCreate, db: Session = Depends(get_db)):
     db.refresh(new_camera)
     
     return {"message": "Camera added successfully!"}
+
+
+# Delete (soft delete) camera by ID
+@router.delete("/cameras/{camera_id}/")
+def delete_camera(camera_id: int, db: Session = Depends(get_db)):
+    camera = db.query(Camera).filter(Camera.camera_id == camera_id, Camera.is_deleted == False).first()
+
+    
+    if not camera:
+        raise HTTPException(status_code=404, detail="Camera not found")
+
+    camera.is_deleted = True  # Mark the camera as deleted
+    camera.modified_on = datetime.now(india_timezone)
+    
+    db.commit()
+    
+    return {"message": f"Camera with ID {camera_id} deleted successfully!"}
+

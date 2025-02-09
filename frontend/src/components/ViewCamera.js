@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';  // Import useParams
+import { useParams, useNavigate } from 'react-router-dom';  // Import useParams
 import '../styles/ViewCamera.css';
 
 const ViewCamera = () => {
   const { cameraId } = useParams();  // Capture the cameraId from the URL
+  const navigate = useNavigate();
   const [isDetecting, setIsDetecting] = useState(false);
   const [videoSource, setVideoSource] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -28,6 +29,24 @@ const ViewCamera = () => {
     }
   };
 
+  const deleteCamera = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/cameras/${cameraId}/`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete camera');
+      }
+
+      // After successful deletion, navigate away (e.g., back to the camera list page)
+      alert("Camera deleted successfully!");
+      navigate('/admin-dashboard'); // Assuming '/cameras' is your camera list route
+    } catch (error) {
+      setErrorMessage('Error: ' + error.message);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
@@ -35,6 +54,9 @@ const ViewCamera = () => {
         <h3>Camera View</h3>
         <button onClick={toggleDetection}>
           {isDetecting ? 'Stop Detection' : 'Start Detection'}
+        </button>
+        <button onClick={deleteCamera} style={{ marginTop: '10px' }}>
+        Delete Camera
         </button>
       </div>
 

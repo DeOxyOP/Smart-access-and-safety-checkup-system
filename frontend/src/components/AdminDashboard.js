@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
-    navigate("/login");
+    navigate("/");
   };
 
   const handleViewCamera = (cameraId) => {

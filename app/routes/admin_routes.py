@@ -86,7 +86,7 @@ def send_reset_email(to_email: str, reset_link: str):
         server.starttls()
         server.login(from_email, from_password)
         msg = MIMEMultipart()
-        msg['From'] = formataddr(('Your App Name', from_email))
+        msg['From'] = formataddr(('GG', from_email))
         msg['To'] = to_email
         msg['Subject'] = 'Password Reset Request'
         msg.attach(MIMEText(f"To reset your password, click on the following link: {reset_link}\n\nIf you did not request a password reset, please ignore this email.", 'plain'))
@@ -110,3 +110,6 @@ def reset_password(request: ResetPasswordRequest, token: str = Query(...), db: S
     admin.password = bcrypt.hashpw(request.new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     db.commit()
     return {"message": "Password reset successful"}
+
+
+
