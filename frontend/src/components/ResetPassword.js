@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
-    const { token } = useParams();  // Get the reset token from the URL
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -10,13 +9,23 @@ const ResetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (newPassword !== confirmPassword) {
             setErrorMessage('Passwords do not match');
             return;
         }
 
+        // Extract token from the URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');  // Get token from reset link
+
+        if (!token) {
+            setErrorMessage('Invalid or missing token. Please request a new reset link.');
+            return;
+        }
+
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/admin/reset-password`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/admin/reset-password?token=${token}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ new_password: newPassword }),
@@ -27,8 +36,8 @@ const ResetPassword = () => {
                 throw new Error(data.detail || "Something went wrong");
             }
 
-            alert(data.message); // Success message
-            navigate("/login");  // Redirect to login page after successful reset
+            alert(data.message);  // Show success message
+            navigate("/login");   // Redirect to login after successful reset
         } catch (error) {
             setErrorMessage("Error: " + error.message);
         }

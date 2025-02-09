@@ -8,15 +8,15 @@ class Admin(Base):
 
     admin_id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(255), nullable=False, unique=True)
-    password = Column(String(255), nullable=False)  # Store hashed password
+    password = Column(String(300), nullable=False)  # Increased length for bcrypt
     created_on = Column(DateTime, default=datetime.now(timezone.utc))
-    modified_on = Column(DateTime, onupdate=datetime.now(timezone.utc))
+    modified_on = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
     is_deleted = Column(Boolean, default=False)
-    reset_token = Column(String(255), nullable=True)  # Add reset_token column
+
+    # Hash the password before storing
+    def set_password(self, password: str):
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     # Method to check if password matches
     def check_password(self, password: str) -> bool:
         return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
-
-
-

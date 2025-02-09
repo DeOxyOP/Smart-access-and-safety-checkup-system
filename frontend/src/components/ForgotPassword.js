@@ -10,10 +10,19 @@ const ForgotPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate email format
+        if (!email.includes("@")) {
+            setErrorMessage("Please enter a valid email address.");
+            return;
+        }
+
         try {
             const response = await fetch("http://127.0.0.1:8000/api/admin/forgot-password", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify({ email }),
             });
 
@@ -23,6 +32,7 @@ const ForgotPassword = () => {
             }
 
             setSuccessMessage(data.message); // Display success message
+            setErrorMessage(""); // Clear error message if successful
             setTimeout(() => {
                 navigate("/login"); // Redirect to login after success
             }, 3000);
@@ -52,5 +62,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-
-

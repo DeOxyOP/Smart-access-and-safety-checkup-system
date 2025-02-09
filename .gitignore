@@ -1,1 +1,7 @@
 jashh/
+# Node modules (installed dependencies)
+frontend/node_modules/
+
+# Build output (Generated files)
+frontend/dist/
+frontend/.parcel-cache/
