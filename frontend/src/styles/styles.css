@@ -1,9 +1,9 @@
 /* General styles for body */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
+  background: linear-gradient(135deg, #f4f4f9, #e8eaf6);
   color: #333;
   display: flex;
   justify-content: center;
@@ -13,56 +13,63 @@ body {
 
 /* Styles for the container */
 .container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.02);
 }
 
 /* Page title styling */
 h2 {
   margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  color: #333;
+  font-size: 2rem;
+  color: #2c3e50;
 }
 
 /* Input field styling */
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 0.75rem;
+  padding: 12px;
   margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
   font-size: 1rem;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus {
   border-color: #007bff;
   outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
 /* Button styling */
 button {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
+  padding: 12px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   border: none;
-  color: #fff;
+  color: #ffffff;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: scale(1.05);
 }
 
 /* Error message styling */
@@ -79,13 +86,16 @@ p.error-message {
 /* Styles for the dashboard */
 .dashboard {
   text-align: center;
-  background-color: #f4f4f9;
+  background: #f4f4f9;
   padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard h2 {
   color: #007bff;
   margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .dashboard p {
@@ -95,9 +105,9 @@ p.error-message {
 
 .dashboard button {
   margin-top: 1rem;
-  background-color: #ff4d4f;
+  background: linear-gradient(135deg, #ff4d4f, #c0392b);
 }
 
 .dashboard button:hover {
-  background-color: #c0392b;
+  background: linear-gradient(135deg, #c0392b, #a93226);
 }

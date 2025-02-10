@@ -14,7 +14,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# ✅ Allow cross-origin requests
+# Allow cross-origin requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Update for production security
@@ -31,10 +31,10 @@ app.include_router(detection_logs_routes.router, prefix="/api")
 def home():
     return {"message": "Welcome to Helmet and Safety Vest Detection API"}
 
-# ✅ Load the YOLO model
+# Load the YOLO model
 model = YOLO(r"C:\Users\jashk\Downloads\model\Yolov10m_LalaSet\weights\best.pt")
 
-# ✅ Store camera instances and detection status
+# Store camera instances and detection status
 camera_dict = {}
 detection_status = {}
 detection_threads = {}

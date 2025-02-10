@@ -29,7 +29,7 @@ const AddCamera = ({ setCameras, onClose }) => {
       if (response.ok) {
         setMessage(result.message);
 
-        // ✅ Fetch updated camera list after adding new camera
+        // Fetch updated camera list after adding new camera
         const updatedCameras = await fetch("http://127.0.0.1:8000/api/get-cameras/").then((res) => res.json());
         setCameras(Array.isArray(updatedCameras) ? updatedCameras : updatedCameras.cameras || []);
 

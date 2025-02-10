@@ -12,14 +12,14 @@ const ViewCamera = () => {
   const toggleDetection = async () => {
     try {
       if (!isDetecting) {
-        // ✅ Start detection for the selected camera
+        // Start detection for the selected camera
         setVideoSource(''); // Force UI update before setting new source
         setIsDetecting(true);
         setTimeout(() => {
           setVideoSource(`http://127.0.0.1:8000/start_detection?camera_id=${cameraId}`);
         }, 200); // Small delay to force UI refresh
       } else {
-        // ✅ Stop detection and clear the video source
+        // Stop detection and clear the video source
         setIsDetecting(false);
         await fetch(`http://127.0.0.1:8000/stop_detection?camera_id=${cameraId}`);
         setVideoSource('');

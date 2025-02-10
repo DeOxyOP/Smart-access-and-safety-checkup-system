@@ -1,53 +1,77 @@
 .add-camera-container {
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   max-width: 400px;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #f3f3f3, #ffffff);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.add-camera-container:hover {
+  transform: scale(1.02);
 }
 
 .add-camera-container h3 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  text-align: center;
 }
 
 .add-camera-container input {
   width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.add-camera-container input:focus {
+  border-color: #2980b9;
+  outline: none;
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
 }
 
 .add-camera-container button {
   width: 100%;
-  padding: 8px;
-  background-color: #2c3e50;
+  padding: 10px;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
 }
 
 .add-camera-container button:hover {
-  background-color: #34495e;
+  background: linear-gradient(135deg, #34495e, #2c3e50);
 }
 
 .success-message {
-  color: green;
+  color: #27ae60;
   margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .error-message {
-  color: red;
+  color: #e74c3c;
   margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .close-button {
-  background-color: #e74c3c;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   margin-top: 10px;
+  border-radius: 6px;
+  transition: background 0.3s ease-in-out;
 }
 
 .close-button:hover {
-  background-color: #c0392b;
+  background: linear-gradient(135deg, #c0392b, #a93226);
 }
