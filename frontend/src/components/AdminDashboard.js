@@ -7,6 +7,7 @@ const AdminDashboard = () => {
   const [admin, setAdmin] = useState(null);
   const [activeTab, setActiveTab] = useState("welcome");
   const [cameras, setCameras] = useState([]); // Store cameras
+  const [detectionLogs, setDetectionLogs] = useState([]); // Store detection logs
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,10 +34,30 @@ const AdminDashboard = () => {
       console.error("Failed to fetch cameras:", error);
     }
   };
+// Fetch detection logs from FastAPI
+const fetchDetectionLogs = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/get-detection-logs/");
+    const data = await response.json();
 
+    if (response.ok) {
+      setDetectionLogs(data.logs || []); // Adjust based on API response
+    } else {
+      console.error("Error fetching detection logs:", data.message);
+    }
+  } catch (error) {
+    console.error("Failed to fetch detection logs:", error);
+  }
+};
   useEffect(() => {
     fetchCameras(); // Fetch cameras when the component mounts
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "detection-logs") {
+      fetchDetectionLogs(); // Fetch detection logs when the tab is active
+    }
+  }, [activeTab]);
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
@@ -79,7 +100,39 @@ const AdminDashboard = () => {
             )}
           </div>
         )}
-        {activeTab === "detection-logs" && <h2>Detection Logs Page</h2>}
+        {activeTab === "detection-logs" && (
+          <div>
+            <h2>Detection Logs</h2>
+            {detectionLogs.length === 0 ? (
+              <p>No detection logs available.</p>
+            ) : (
+              <table className="logs-table" border={1}>
+                <thead>
+                  <tr>
+                    <th>Log ID</th>
+                    <th>Camera ID</th>
+                    <th>Timestamp</th>
+                    <th>Detected Gear</th>
+                    <th>Confidence Score</th>
+                    <th>Entry Allowance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detectionLogs.map((log) => (
+                    <tr key={log.log_id}>
+                      <td>{log.log_id}</td>
+                      <td>{log.camera_id}</td>
+                      <td>{new Date(log.timestamp).toLocaleString()}</td>
+                      <td>{log.detected_gear}</td>
+                      <td>{log.confidence_score}</td>
+                      <td>{log.entry_allowance}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )} 
       </div>
     </div>
   );
