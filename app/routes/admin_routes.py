@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
 from app.database import get_db
 from app.models.admin_models import Admin
 from pydantic import BaseModel
@@ -9,28 +11,35 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
-from fastapi.responses import JSONResponse
 from typing import Optional
-from jose import JWTError, jwt
 
-# Secret key to encode JWT tokens
+# Secret key and settings for JWT
 SECRET_KEY = "1234567890"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# Function to create JWT token
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/admin/token")
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-# Function to verify JWT token
 def verify_access_token(token: str):
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
         return None
+
+def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    payload = verify_access_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    admin = db.query(Admin).filter(Admin.email == payload.get("sub")).first()
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    return admin
 
 router = APIRouter()
 india_timezone = timezone(timedelta(hours=5, minutes=30))
@@ -45,18 +54,26 @@ class ForgotPasswordRequest(BaseModel):
 class ResetPasswordRequest(BaseModel):
     new_password: str
 
+@router.post("/admin/token")
+def generate_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    admin = db.query(Admin).filter(Admin.email == form_data.username).first()
+    if not admin or not admin.check_password(form_data.password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    access_token = create_access_token(data={"sub": admin.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
 @router.get("/get-admins/")
-def get_admins(db: Session = Depends(get_db)):
+def get_admins(db: Session = Depends(get_db), admin: Admin = Depends(get_current_admin)):
     return db.query(Admin).all()
 
 @router.post("/admins/")
-def create_admin(email: str, password: str, db: Session = Depends(get_db)):
+def create_admin(email: str, password: str, db: Session = Depends(get_db), admin: Admin = Depends(get_current_admin)):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    admin = Admin(email=email, password=hashed_password, created_on=datetime.now(india_timezone), modified_on=datetime.now(india_timezone), is_deleted=False)
-    db.add(admin)
+    new_admin = Admin(email=email, password=hashed_password, created_on=datetime.now(india_timezone), modified_on=datetime.now(india_timezone), is_deleted=False)
+    db.add(new_admin)
     db.commit()
-    db.refresh(admin)
-    return admin
+    db.refresh(new_admin)
+    return new_admin
 
 @router.post("/admin/login")
 def admin_login(request: LoginRequest, db: Session = Depends(get_db)):
@@ -110,6 +127,3 @@ def reset_password(request: ResetPasswordRequest, token: str = Query(...), db: S
     admin.password = bcrypt.hashpw(request.new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     db.commit()
     return {"message": "Password reset successful"}
-
-
-

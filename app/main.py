@@ -1,14 +1,17 @@
 import cv2
 from ultralytics import YOLO
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from app.database import Base, engine, SessionLocal
 from app.models.camera_model import Camera
+from app.models.detection_logs_model import DetectionLog
 from app.routes import admin_routes, camera_routes, detection_logs_routes
 import threading
 import time
+import datetime
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -76,6 +79,27 @@ def detect_objects(camera_id):
         frame = cv2.flip(frame, 1)
         results = model.predict(source=frame, conf=0.5, show=False)
         annotated_frame = results[0].plot()
+        
+        # ✅ Extract detection results
+        detected_classes = [results[0].names[int(cls)] for cls in results[0].boxes.cls]
+        detected_gear = ", ".join(set(detected_classes)) if detected_classes else "No detection"
+
+        confidence_scores = results[0].boxes.conf.tolist()
+        confidence_score = max(confidence_scores) if confidence_scores else 0.0
+
+        entry_allowance = "Allowed" if "Helmet" in detected_gear and "Safety-Vest" in detected_gear else "Denied"
+        
+        # ✅ Store detection logs in the database (Fixed Session Issue)
+        db = SessionLocal()
+        new_log = DetectionLog(
+            camera_id=camera_id,
+            detected_gear=detected_gear,
+            confidence_score=confidence_score,
+            entry_allowance=entry_allowance
+        )
+        db.add(new_log)
+        db.commit()
+        db.close()
 
         _, img_encoded = cv2.imencode('.jpg', annotated_frame)
         frame_bytes = img_encoded.tobytes()

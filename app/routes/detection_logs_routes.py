@@ -1,7 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.detection_logs_model import DetectionLog
 
 router = APIRouter()
 
-@router.get("/")
-async def read_detection_logs():
-    return {"message": "This is the detection logs endpoint"}
+@router.get("/get-detection-logs/")
+def get_detection_logs(db: Session = Depends(get_db)):
+    logs = db.query(DetectionLog).all()
+    return {"logs": logs}  # ✅ Fixed response format
