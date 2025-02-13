@@ -58,6 +58,10 @@ const ViewCamera = () => {
         <button onClick={deleteCamera} style={{ marginTop: '10px' }}>
         Delete Camera
         </button>
+                {/* Back Button */}
+                <button onClick={() => navigate('/admin-dashboard')} style={{ marginTop: '10px' }}>
+          Back to Dashboard
+        </button>
       </div>
 
       {/* Content area */}
