@@ -208,7 +208,7 @@ def home():
     return {"message": "Welcome to Helmet and Safety Vest Detection API"}
 
 # ✅ Load the YOLO model
-model = YOLO(r"C:\Users\jashk\Downloads\model\Yolov10m_LalaSet\weights\best.pt")
+model = YOLO(r"C:\Users\jashk\Downloads\model\yolov8m_Lalaset\weights\best.pt")
 
 # ✅ Store camera and detection data
 camera_dict = {}

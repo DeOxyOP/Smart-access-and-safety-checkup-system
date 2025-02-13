@@ -25,7 +25,7 @@ const Login = () => {
 
       // Store the admin information in localStorage
       localStorage.setItem("admin", JSON.stringify({ email })); // Store only the email for now
-      alert(data.message); // Show the success message
+      // alert(data.message); // Show the success message
 
       // Navigate to the dashboard
       navigate("/admin-dashboard");
