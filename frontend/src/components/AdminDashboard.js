@@ -6,8 +6,8 @@ import "../styles/AdminDashboard.css";
 const AdminDashboard = () => {
   const [admin, setAdmin] = useState(null);
   const [activeTab, setActiveTab] = useState("welcome");
-  const [cameras, setCameras] = useState([]); // Store cameras
-  const [detectionLogs, setDetectionLogs] = useState([]); // Store detection logs
+  const [cameras, setCameras] = useState([]);
+  const [detectionLogs, setDetectionLogs] = useState([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const fetchDetectionLogs = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      setDetectionLogs(data.logs || []); // Adjust based on API response
+      setDetectionLogs(data.logs || []); 
     } else {
       console.error("Error fetching detection logs:", data.message);
     }
@@ -62,7 +62,7 @@ const fetchDetectionLogs = async () => {
 
   useEffect(() => {
     if (activeTab === "detection-logs") {
-      fetchDetectionLogs(); // Fetch detection logs when the tab is active
+      fetchDetectionLogs();
     }
   }, [activeTab]);
 

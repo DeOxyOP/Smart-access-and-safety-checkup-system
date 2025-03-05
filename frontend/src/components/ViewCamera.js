@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';  // Import useParams
 import '../styles/ViewCamera.css';
 
 const ViewCamera = () => {
-  const { cameraId } = useParams();  // Capture the cameraId from the URL
+  const { cameraId } = useParams();
   const navigate = useNavigate();
   const [isDetecting, setIsDetecting] = useState(false);
   const [videoSource, setVideoSource] = useState('');
@@ -12,14 +12,14 @@ const ViewCamera = () => {
   const toggleDetection = async () => {
     try {
       if (!isDetecting) {
-        // ✅ Start detection for the selected camera
-        setVideoSource(''); // Force UI update before setting new source
+        
+        setVideoSource('');
         setIsDetecting(true);
         setTimeout(() => {
           setVideoSource(`http://127.0.0.1:8000/start_detection?camera_id=${cameraId}`);
-        }, 200); // Small delay to force UI refresh
+        }, 200); 
       } else {
-        // ✅ Stop detection and clear the video source
+        
         setIsDetecting(false);
         await fetch(`http://127.0.0.1:8000/stop_detection?camera_id=${cameraId}`);
         setVideoSource('');
@@ -39,9 +39,9 @@ const ViewCamera = () => {
         throw new Error('Failed to delete camera');
       }
 
-      // After successful deletion, navigate away (e.g., back to the camera list page)
+      
       alert("Camera deleted successfully!");
-      navigate('/admin-dashboard'); // Assuming '/cameras' is your camera list route
+      navigate('/admin-dashboard'); 
     } catch (error) {
       setErrorMessage('Error: ' + error.message);
     }

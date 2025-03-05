@@ -3,8 +3,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from app.database import get_db
-from app.models.admin_models import Admin
+from app.db.database import get_db
+from app.db.models.admin_models import Admin
 from pydantic import BaseModel
 import bcrypt
 import smtplib
@@ -103,7 +103,7 @@ def send_reset_email(to_email: str, reset_link: str):
         server.starttls()
         server.login(from_email, from_password)
         msg = MIMEMultipart()
-        msg['From'] = formataddr(('GG', from_email))
+        msg['From'] = formataddr(('safety system', from_email))
         msg['To'] = to_email
         msg['Subject'] = 'Password Reset Request'
         msg.attach(MIMEText(f"To reset your password, click on the following link: {reset_link}\n\nIf you did not request a password reset, please ignore this email.", 'plain'))

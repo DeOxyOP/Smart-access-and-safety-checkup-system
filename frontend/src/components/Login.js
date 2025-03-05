@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/styles.css"; // Import a CSS file for styling
+import "../styles/styles.css"; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isForgotPassword, setIsForgotPassword] = useState(false); // Track if user is in forgot password mode
-  const [resetEmail, setResetEmail] = useState(""); // Email for password reset request
+  const [isForgotPassword, setIsForgotPassword] = useState(false); 
+  const [resetEmail, setResetEmail] = useState(""); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,7 +24,7 @@ const Login = () => {
       }
 
       // Store the admin information in localStorage
-      localStorage.setItem("admin", JSON.stringify({ email })); // Store only the email for now
+      localStorage.setItem("admin", JSON.stringify({ email })); 
       // alert(data.message); // Show the success message
 
       // Navigate to the dashboard
@@ -49,8 +49,8 @@ const Login = () => {
       if (!response.ok) {
         throw new Error(data.detail || "Something went wrong");
       }
-      alert(data.message); // Success message
-      setIsForgotPassword(false); // Return to the login form
+      alert(data.message); 
+      setIsForgotPassword(false); 
     } catch (error) {
       setErrorMessage("Error: " + error.message);
     }

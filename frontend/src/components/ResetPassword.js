@@ -17,7 +17,7 @@ const ResetPassword = () => {
 
         // Extract token from the URL query string
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');  // Get token from reset link
+        const token = urlParams.get('token');
 
         if (!token) {
             setErrorMessage('Invalid or missing token. Please request a new reset link.');
@@ -36,8 +36,8 @@ const ResetPassword = () => {
                 throw new Error(data.detail || "Something went wrong");
             }
 
-            alert(data.message);  // Show success message
-            navigate("/");   // Redirect to login after successful reset
+            alert(data.message); 
+            navigate("/");  
         } catch (error) {
             setErrorMessage("Error: " + error.message);
         }

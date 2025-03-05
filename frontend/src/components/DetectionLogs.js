@@ -19,7 +19,7 @@ const DetectionLogs = () => {
 
   const formatIST = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }); // ✅ Convert to IST
+    return date.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
   };
 
   return (
@@ -48,7 +48,7 @@ const DetectionLogs = () => {
                 <td>{log.detected_gear}</td>
                 <td>{log.confidence_score.toFixed(2)}</td>
                 <td>{log.entry_allowance}</td>
-                <td>{formatIST(log.timestamp)}</td> {/* ✅ Convert to IST */}
+                <td>{formatIST(log.timestamp)}</td> {/* Convert to IST */}
               </tr>
             ))}
           </tbody>

@@ -179,10 +179,10 @@ from fastapi import FastAPI, Depends
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from app.database import Base, engine, SessionLocal
-from app.models.camera_model import Camera
-from app.models.detection_logs_model import DetectionLog
-from app.routes import admin_routes, camera_routes, detection_logs_routes
+from app.db.database import Base, engine, SessionLocal
+from app.db.models.camera_model import Camera
+from app.db.models.detection_logs_model import DetectionLog
+from app.api.routes import admin_routes, camera_routes, detection_logs_routes
 import threading
 import time
 
@@ -190,7 +190,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# ✅ Allow cross-origin requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -207,14 +206,12 @@ app.include_router(detection_logs_routes.router, prefix="/api")
 def home():
     return {"message": "Welcome to Helmet and Safety Vest Detection API"}
 
-# ✅ Load the YOLO model
-model = YOLO(r"C:\Users\jashk\Downloads\model\yolov8m_Lalaset\weights\best.pt")
+model = YOLO(r"C:\Users\jashk\Downloads\model\Yolov12n_Lalaset\runs\detect\custom_yolo12n\weights\best.pt")
 
-# ✅ Store camera and detection data
 camera_dict = {}
 detection_status = {}
 detection_threads = {}
-last_detection_result = {}  # Stores detection results for each camera
+last_detection_result = {}  
 lock = threading.Lock()
 
 

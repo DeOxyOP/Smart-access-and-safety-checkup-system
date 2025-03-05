@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/styles.css"; // Import a CSS file for styling
+import "../styles/styles.css";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate email format
+        
         if (!email.includes("@")) {
             setErrorMessage("Please enter a valid email address.");
             return;
@@ -31,10 +31,10 @@ const ForgotPassword = () => {
                 throw new Error(data.detail || "Something went wrong");
             }
 
-            setSuccessMessage(data.message); // Display success message
-            setErrorMessage(""); // Clear error message if successful
+            setSuccessMessage(data.message);
+            setErrorMessage("");
             setTimeout(() => {
-                navigate("/login"); // Redirect to login after success
+                navigate("/login");
             }, 3000);
         } catch (error) {
             setErrorMessage(error.message || "Something went wrong!");

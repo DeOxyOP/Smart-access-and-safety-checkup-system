@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
-from app.database import Base
+from app.db.database import Base
 from datetime import datetime, timezone
 import bcrypt
 
@@ -8,7 +8,7 @@ class Admin(Base):
 
     admin_id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(255), nullable=False, unique=True)
-    password = Column(String(300), nullable=False)  # Increased length for bcrypt
+    password = Column(String(300), nullable=False)
     created_on = Column(DateTime, default=datetime.now(timezone.utc))
     modified_on = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
     is_deleted = Column(Boolean, default=False)

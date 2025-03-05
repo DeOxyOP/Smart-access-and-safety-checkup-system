@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/AddCamera.css"; // Separate CSS for styling
+import "../styles/AddCamera.css";
 
 const AddCamera = ({ setCameras, onClose }) => {
   const [cameraName, setCameraName] = useState("");
@@ -29,7 +29,7 @@ const AddCamera = ({ setCameras, onClose }) => {
       if (response.ok) {
         setMessage(result.message);
 
-        // ✅ Fetch updated camera list after adding new camera
+        
         const updatedCameras = await fetch("http://127.0.0.1:8000/api/get-cameras/").then((res) => res.json());
         setCameras(Array.isArray(updatedCameras) ? updatedCameras : updatedCameras.cameras || []);
 

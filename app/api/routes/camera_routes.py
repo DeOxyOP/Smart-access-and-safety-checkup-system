@@ -2,8 +2,8 @@ from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.models.camera_model import Camera
+from app.db.database import get_db
+from app.db.models.camera_model import Camera
 
 router = APIRouter()
 india_timezone = timezone(timedelta(hours=5, minutes=30))
@@ -53,7 +53,7 @@ def delete_camera(camera_id: int, db: Session = Depends(get_db)):
     if not camera:
         raise HTTPException(status_code=404, detail="Camera not found")
 
-    camera.is_deleted = True  # Mark the camera as deleted
+    camera.is_deleted = True
     camera.modified_on = datetime.now(india_timezone)
     
     db.commit()

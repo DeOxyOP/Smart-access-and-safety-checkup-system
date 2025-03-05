@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
-from app.database import Base
+from app.db.database import Base
 from datetime import datetime, timezone
 
 class Camera(Base):
@@ -11,4 +11,4 @@ class Camera(Base):
     created_on = Column(DateTime, nullable=False)
     modified_on = Column(DateTime)
     is_deleted = Column(Boolean, nullable=False)
-    location = Column(String(255), nullable=False)  # Add the 'location' column
+    location = Column(String(255), nullable=False)
