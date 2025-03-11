@@ -49,9 +49,10 @@
 
 /* Camera Grid - Responsive */
 .camera-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Ensures responsiveness */
+  justify-content: center; /* Centers the camera cards */
+  gap: 20px; /* Adds spacing between cards */
   padding: 20px;
 }
 

@@ -1,0 +1,17 @@
+open terminal
+create python env: python -m venv name
+activate env using: env\Scripts\activate
+run the command: uvicorn app.main:app --reload
+
+open other terminal
+run command: cd frontend
+run command: npm init -y
+run command: npm install --save-dev-parcel
+change package.json:    "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  }
+run command: npm install react react-dom axios react-router-dom
+run command: npm start
+
+

@@ -65,11 +65,17 @@ button {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
-  margin-top: 10px;  /* This adds space between buttons */
+  margin-top: 10px; /* This adds space between buttons */
 }
 
 button:first-of-type {
-  margin-top: 7px;  /* Ensures first button has proper spacing */
+  margin-top: 7px; /* Ensures first button has proper spacing */
+}
+
+/* Hover effect for buttons */
+button:hover {
+  background: linear-gradient(135deg, #5e3b63, #351c40);
+  transform: scale(1.02);
 }
 
 /* Error message styling */
@@ -103,6 +109,7 @@ p.error-message {
   margin: 0.5rem 0;
 }
 
+/* Dashboard button */
 .dashboard button {
   margin-top: 1rem;
   background: linear-gradient(135deg, #ff4d4f, #c0392b);
@@ -110,4 +117,5 @@ p.error-message {
 
 .dashboard button:hover {
   background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: scale(1.02);
 }

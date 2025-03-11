@@ -206,7 +206,7 @@ app.include_router(detection_logs_routes.router, prefix="/api")
 def home():
     return {"message": "Welcome to Helmet and Safety Vest Detection API"}
 
-model = YOLO(r"C:\Users\jashk\Downloads\model\Yolov12n_Lalaset\runs\detect\custom_yolo12n\weights\best.pt")
+model = YOLO(r"C:\Users\jashk\Downloads\model\yolov8m_Lalaset\weights\best.pt")
 
 camera_dict = {}
 detection_status = {}
