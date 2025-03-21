@@ -1,77 +1,97 @@
+/* Add Camera Container */
 .add-camera-container {
   margin-top: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  background: linear-gradient(135deg, #f3f3f3, #ffffff);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .add-camera-container:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Header */
 .add-camera-container h3 {
   margin-bottom: 15px;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #2c3e50;
   text-align: center;
+  font-weight: bold;
 }
 
+/* Input Fields */
 .add-camera-container input {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  max-width: 380px; /* Ensures input fields don't stretch beyond container */
+  padding: 12px;
+  margin: 10px 0;
   border: 1px solid #bdc3c7;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box; /* Prevents padding from increasing width */
 }
 
 .add-camera-container input:focus {
-  border-color: #2980b9;
+  border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
 }
 
+/* Buttons */
 .add-camera-container button {
   width: 100%;
-  padding: 10px;
-  background: linear-gradient(135deg, #452c50, #452c50);
+  max-width: 380px; /* Matches input field width */
+  padding: 12px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .add-camera-container button:hover {
-  background: linear-gradient(135deg, #452c50, #452c50);
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  transform: scale(1.03);
 }
 
+/* Success & Error Messages */
 .success-message {
   color: #27ae60;
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: bold;
   text-align: center;
+  font-size: 1rem;
 }
 
 .error-message {
   color: #e74c3c;
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: bold;
   text-align: center;
+  font-size: 1rem;
 }
 
+/* Close Button */
 .close-button {
   background: linear-gradient(135deg, #e74c3c, #c0392b);
-  margin-top: 10px;
-  border-radius: 6px;
-  transition: background 0.3s ease-in-out;
+  margin-top: 12px;
+  border-radius: 8px;
+  transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
 .close-button:hover {
   background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: scale(1.03);
 }
